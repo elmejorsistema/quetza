@@ -150,7 +150,7 @@ $rengloncss = 0;
 $capacitacion = null;
 //$grupo        = null
 
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
   {
 
 

@@ -1,6 +1,7 @@
 <?php
 
 define("EMPRESA", "Prefeco Quetzalcóatl");
+define("ENVIRONMENT", "PRODUCTION");
 
 // inlcludes
 include "clases.php";
@@ -31,9 +32,12 @@ else
 $control_structure_id=6;
 
 
+$o_databaseCredentials = new databaseCredentials($db_host,  $db_name,  $db_user,  $db_password);
+$o_databaseCredentials2 = new databaseCredentials($db_host2,  $db_name2,  $db_user2,  $db_password2);
 
 // database object
-$o_database = new database($db_host, $db_name, $db_user, $db_password);
+$o_database  = new database($o_databaseCredentials->db_host,  $o_databaseCredentials->db_name, $o_databaseCredentials->db_user,  $o_databaseCredentials->db_password);
+
 
 
 // Let's go out, it was no possible to create a proper db connection 
@@ -125,7 +129,7 @@ if(!$o_database->query_fetch_row($s_query))
 
 
 
-$o_config = new config($a_cs[0], $a_cs[1], EMPRESA, $o_database->query_row[0], $o_database->query_row[1]);
+$o_config = new config($a_cs[0], $a_cs[1], EMPRESA, $o_database->query_row[0], $o_database->query_row[1], ENVIRONMENT);
 
 
 
@@ -143,7 +147,8 @@ $o_database->disconnect();
 // point  
 $_SESSION['config']   = serialize($o_config);
 $_SESSION['user']     = serialize($o_user);
-$_SESSION['database'] = serialize($o_database);
+$_SESSION['databaseCredentials'] = serialize($o_databaseCredentials);
+
 $_SESSION['security'] = serialize($o_security);
 $_SESSION['message']  = serialize($o_message);
 

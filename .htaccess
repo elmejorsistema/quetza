@@ -1,0 +1,7 @@
+## AddType application/x-httpd-php56 .php
+## Action application/x-httpd-php56 /fcgi-bin/php5_wrapper.sh
+
+#Options +FollowSymlinks
+#RewriteEngine on
+#RewriteCond %{SERVER_PORT} 80
+#RewriteRule ^(.*) https://intranet.quetza.edu.mx [L]

@@ -11,21 +11,24 @@ session_start();
 
 // the main object arriving
 ////////////////////////////////////////////////
-if(empty($_SESSION['security']) || empty($_SESSION['config']) || empty($_SESSION['user']) || empty($_SESSION['database'])){
-  echo "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=logout.php\" ></head></html>";
+if(empty($_SESSION['security']) || empty($_SESSION['config']) || empty($_SESSION['user']) || empty($_SESSION['databaseCredentials'])){
+  echo "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=../logout.php\" ></head></html>";
   return;
 }else{
  $o_config   = unserialize($_SESSION['config']);
  $o_user     = unserialize($_SESSION['user']);
  $o_security = unserialize($_SESSION['security']);
- $o_database = unserialize($_SESSION['database']);
+ $o_databaseCredentials  = unserialize($_SESSION['databaseCredentials']);
+    
 }
 
 
 // VERY IMPORTANT //////////////////////////////
 // connect the database since is not possible
 // serialize/unserialize resources
-$o_database->initialconnect(); 
+$o_database  = new database($o_databaseCredentials->db_host,  $o_databaseCredentials->db_name,
+    $o_databaseCredentials->db_user,  $o_databaseCredentials->db_password);
+
 ///////////////////////////////////////////////
 
 
@@ -65,7 +68,7 @@ $q = "select e.*, p.* from employee as e join payroll as p on e.id = p.employee_
 $o_database->query_rows($q);
 $result = $o_database->query_result;
 $data = array();
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
   {
     $label = "[".$row[9]."]  => [".$row[10]."] ".$row[1];
     $data[] = array("value" => $row[1], "label" => $label, "name" => $row[1], "e_id" => $row[0], "rate_hour" =>  $row[6], "p_id" => $row[4], "hours" => $row[7], "total_hours" => $row[8], "initial" => $row[9], "final" => $row[10], "extra_1" => $row[11], "comment_extra_1" => $row[12], "extra_2" => $row[13], "comment_extra_2" => $row[14], "extra_3" => $row[15], "comment_extra_3" => $row[16]);

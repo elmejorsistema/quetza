@@ -68,7 +68,7 @@ echo "<hr />
 
 <table class=\"detalle-pagos\" id=\"gastos\">";
 echo "<tr><td class=\"encabezado-detalle-pagos\">Folio</td><td class=\"encabezado-detalle-pagos\">Usuario</td><td class=\"encabezado-detalle-pagos\">Fecha</td><td class=\"encabezado-detalle-pagos\">Concepto</td><td class=\"encabezado-detalle-pagos\">Monto</td>";
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
     echo"<tr><td class=\"pago\">$row[0]</td><td class=\"pago\">$row[4]</td><td class=\"pago\">$row[1]</td><td class=\"pago\">$row[2]</td><td class=\"pago-monto\">$".number_format($row[3],2,".",",")."</td></tr>";
 
 echo "<tr><td class=\"pago-estadocuenta\" colspan=\"5\"><a class=\"materia\" target=\"_self\" href=\"util/27.php?reporte_id=1\">Reporte de Gastos de Hoy</a></td>";

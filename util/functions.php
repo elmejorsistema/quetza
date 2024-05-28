@@ -55,7 +55,7 @@ $renglones = 0;
 $q = "select cs.id from user_has_control_structure as uhcs join control_structure as cs on cs.id = uhcs.control_structure_id where cs.control_structure_id =$cs1 and uhcs.user_id = $o_user order by cs.sequence";
 $o_database->query_rows($q);
 $result = $o_database->query_result;
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
   {
     $renglones ++;
     if($row[0] == $cs2)
@@ -265,7 +265,7 @@ function create_select($query, $name, $selected, $evento, $o_db, $class){
   //return;
 
   echo"<select class=\"$class\" name=\"$name\" id=\"$name\" $evento>";
-  while($result_row = mysql_fetch_row($o_db->query_result)){
+  foreach($o_db->query_result as $result_row){
     $val = $result_row[0];
     $label = $result_row[1];
 
@@ -288,7 +288,7 @@ function create_select_json($query, $a_names, $name, $selected, $evento, $o_db, 
   $contador  = 0;
   $ciclo_ant = null;
   $tipo_ant  = null;
-  while($result_row = mysql_fetch_row($o_db->query_result)){
+  foreach($o_db->query_result as $result_row){
 
     if($contador > 0){
       $ciclo_ant = $ciclo;
@@ -357,7 +357,7 @@ function imirimeTicket($sale_id, $o_database, $o_user)
   $o_database->query_rows($q);
   $result = $o_database->query_result;
   
-  while($row = mysql_fetch_row($result))
+  foreach($result as $row)
     {
       $quantity = addSpaces($row[0],  3, 0);
       $nombre   = addSpaces($row[1], 22, 1);
@@ -400,7 +400,7 @@ function imprimeCorteDeCaja($fecha, $o_database, $o_user)
   $o_database->query_rows($q);
   $result = $o_database->query_result;
   $total0 = 0;
-  while($row = mysql_fetch_row($result))
+  foreach($result as $row)
     {
       $ticket .= "*************************************\n";
       $ticket .= "$row[1]\n";
@@ -409,15 +409,15 @@ function imprimeCorteDeCaja($fecha, $o_database, $o_user)
       $o_database->query_rows($qq);
       $result1 = $o_database->query_result;
       $total1 = 0;
-      while($row1 = mysql_fetch_row($result1))
-	{
-	  $id       = addSpaces($row1[0], 4, 0);
-	  $nombre   = addSpaces($row1[1], 5, 1);
-	  $tarjeta  = addSpaces($row1[2], 15, 1);
-	  $precio   = addSpaces(number_format($row1[3],2,".",","), 9, 0);
+      foreach($result1 as $row1)
+        {
+          $id       = addSpaces($row1[0], 4, 0);
+          $nombre   = addSpaces($row1[1], 5, 1);
+          $tarjeta  = addSpaces($row1[2], 15, 1);
+          $precio   = addSpaces(number_format($row1[3],2,".",","), 9, 0);
           $ticket .= $id." ".$nombre." ".$tarjeta." $".$precio."\n";
           $total1 += $row1[3];
-	}
+        }
   $ticket .= "-------------------------------------\n";
   $ticket .= "SubTotal                   $".addSpaces(number_format($total1,2,".",","), 9, 0)."\n";
   $total0 += $total1;

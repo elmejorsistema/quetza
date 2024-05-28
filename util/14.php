@@ -20,7 +20,7 @@ $q = "select s.id, s.id from semestre as s join ciclo as c on c.tipo = s.tipo wh
 create_select($q, "o-semestre", "", "", $o_database, "a-select");
 
 //$q = "select chm.id, chm.grupo_name from ciclo_has_materia as chm join ciclo as c on c.id = chm.ciclo_id where  c.status = \"Activo\" and chm.grupo_id < 700 group by chm.grupo_id";
-$q = "select g.id, chm.grupo_name from grupo as g join ciclo_has_materia as chm on g.id = chm.grupo_id where chm.ciclo_id = '$o_config->ciclo' and  chm.ciclo_tipo = '$o_config->tipo'and chm.grupo_id < 700 group by .g.id order by g.id";
+$q = "select g.id, chm.grupo_name from grupo as g join ciclo_has_materia as chm on g.id = chm.grupo_id where chm.ciclo_id = '$o_config->ciclo' and  chm.ciclo_tipo = '$o_config->tipo' and chm.grupo_id < 700 group by g.id order by g.id";
 //echo $q;
 create_select($q, "o-grupo", "", "", $o_database, "a-select-hidden");
 echo "</td>

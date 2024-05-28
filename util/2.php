@@ -37,7 +37,7 @@ No tienes grupos asignados para este periodo
 
 echo "
 <table class=\"a-contenido\">";
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
   {
     
     echo "<tr><td class=\"a-menu-contenido\"><a class=\"materia\" href=\"?&cs1=$o_config->control_structure_id1&cs2=3&id=$row[2]\">$row[0] ($row[1])</td></tr>";

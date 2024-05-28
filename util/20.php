@@ -5,7 +5,9 @@ include "functions.php";
 include "../clases.php";
 include "../config/dbconfig.php";
 
-require_once ('../dompdf/dompdf_config.inc.php');
+require_once ('../dompdf/vendor/autoload.php');
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 session_name($session_name);
 session_start();
@@ -13,14 +15,15 @@ session_start();
 
 // the main object arriving
 ////////////////////////////////////////////////
-if(empty($_SESSION['security']) || empty($_SESSION['config']) || empty($_SESSION['user']) || empty($_SESSION['database'])){
-  echo "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=logout.php\" ></head></html>";
+if(empty($_SESSION['security']) || empty($_SESSION['config']) || empty($_SESSION['user']) || empty($_SESSION['databaseCredentials'])){
+  echo "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=../logout.php\" ></head></html>";
   return;
 }else{
  $o_config   = unserialize($_SESSION['config']);
  $o_user     = unserialize($_SESSION['user']);
  $o_security = unserialize($_SESSION['security']);
- $o_database = unserialize($_SESSION['database']);
+ $o_databaseCredentials  = unserialize($_SESSION['databaseCredentials']);
+    
 }
 
 //var_dump($o_config);return;
@@ -28,7 +31,9 @@ if(empty($_SESSION['security']) || empty($_SESSION['config']) || empty($_SESSION
 // VERY IMPORTANT //////////////////////////////
 // connect the database since is not possible
 // serialize/unserialize resources
-$o_database->initialconnect(); 
+$o_database  = new database($o_databaseCredentials->db_host,  $o_databaseCredentials->db_name,
+    $o_databaseCredentials->db_user,  $o_databaseCredentials->db_password);
+
 ///////////////////////////////////////////////
 
 
@@ -203,7 +208,7 @@ hr {width:50%;}
 </style>
 <body>
 <p class=\"encabezado\">
-<img class=\"logo-chico\" style=\"width:45mm;\" src=\"../img/Logo_Prefeco_Quetzalcoatl_4cm.jpg\"><br />
+<img class=\"logo-chico\" style=\"width:45mm;\" src=\"".$domain."Logo_Prefeco_Quetzalcoatl_4cm.jpg\"><br />
 Escuela Preparatoria Federal por Cooperación<br />
 <b>\"QUETZALCÓATL\"</b><br />
 Clave: EMS-2/123 CCT. 17SBC2123R<br />Tepoztlán, Morelos<br />
@@ -222,7 +227,7 @@ Ciclo $result[10]  Semestre $result[11]
 
 $nombre_archivo = "Pago-$result[0].pdf";
 $largo = 300;
-$pdf = new DOMPDF();
+$pdf = new Dompdf();
 $pdf->set_option("enable_html5_parser", TRUE);
 $customPaper = array(0,0,226.77,$largo);
 $pdf->set_paper($customPaper);
@@ -326,7 +331,7 @@ Clave: EMS-2/123 CCT. 17SBC2123R<br />Tepoztlán, Morelos
 
 //select ahchp.id, p.descripcion, ahchp.descripcion, ahchp.monto, ahchp.fecha, chp.ciclo_id, chp.ciclo_tipo, r.fecha from
 $total=0;            
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
 {
     $html .= "<tr><td>$row[1] $row[5] ($row[6])</td><td class=\"derecha\">".number_format($row[3], 2, ".", ",")."</td></tr>";
     $total += $row[3];
@@ -339,7 +344,7 @@ $html .= "<hr><p class=\"encabezado\">Carretera Federal Cuernavaca-Tepoztlán Km
 
 $nombre_archivo = "Recibo-$recibo_id.pdf";
 
-$pdf = new DOMPDF();
+$pdf = new Dompdf();
 $pdf->set_option("enable_html5_parser", TRUE);
 $customPaper = array(0,0,226.77,$largo);
 $pdf->set_paper($customPaper);
@@ -451,7 +456,7 @@ if(!$todos_los_ciclos)
 $html .= "</p>
 <hr />
 <p class=\"encabezado\"><b>Estado de Cuenta<br />$a_alumno[0] $a_alumno[1] $a_alumno[2] ($alumno_id)<br />Fecha de impresión: $human_date</b></p><table>";
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
 {
     if(!$todos_los_ciclos)
         $html.= "<tr><td>$row[4]</td><td>$row[1]</td><td class=\"d\">$".number_format($row[3],2,".",",")."</td></tr>";
@@ -465,7 +470,7 @@ while($row = mysql_fetch_row($result))
 
 $nombre_archivo = "EstadoCuenta-$alumno_id.pdf";
 //$largo = 300;
-$pdf = new DOMPDF();
+$pdf = new Dompdf();
 $pdf->set_option("enable_html5_parser", TRUE);
 $customPaper = array(0,0,226.77,$largo);
 $pdf->set_paper($customPaper);
@@ -568,7 +573,7 @@ hr {width:50%;}
 </style>
 <body>
 <p class=\"encabezado\">
-<img class=\"logo-chico\" style=\"width:45mm;\" src=\"../img/Logo_Prefeco_Quetzalcoatl_4cm.jpg\"><br />
+<img class=\"logo-chico\" style=\"width:45mm;\" src=\"".$domain."Logo_Prefeco_Quetzalcoatl_4cm.jpg\"><br />
 Escuela Preparatoria Federal por Cooperación<br />
 <b>\"QUETZALCÓATL\"</b><br />
 Clave: EMS-2/123 CCT. 17SBC2123R<br />Tepoztlán, Morelos<br />
@@ -587,7 +592,7 @@ Ciclo $result[10]  Semestre $result[11]
 
 $nombre_archivo = "Pago-$result[0].pdf";
 $largo = 300;
-$pdf = new DOMPDF();
+$pdf = new Dompdf();
 $pdf->set_option("enable_html5_parser", TRUE);
 $customPaper = array(0,0,226.77,$largo);
 $pdf->set_paper($customPaper);
@@ -707,7 +712,7 @@ hr {
 $alumno_id = null;
 $inicio    = true;
 $contador  = 1;
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
   {
     if($alumno_id != $row[13])
       {
@@ -786,7 +791,7 @@ while($row = mysql_fetch_row($result))
 $html .= "</table></body></html>";
 
 
-$pdf = new DOMPDF();
+$pdf = new Dompdf();
 $pdf->set_option("enable_html5_parser", TRUE);
 $pdf->set_paper("Letter", "portrait");
 
@@ -813,18 +818,18 @@ return "
 <table>
 <tr>
 <td class=\"encabezado-arriba-img\">
-<img class=\"logo\" src=\"../img/SEP_3cm.jpg\">
+<img class=\"logo\" src=\"".$domain."SEP_3cm.jpg\">
 </td>
 <td class=\"encabezado-arriba-centro\">
 Subsecretaría de Educación Media Superior<br />
 Dirección General de Bachillerato<br />
 Escuela Preparatoria Federal por Cooperación<br />
 <b>\"QUETZALCÓATL\"</b><br />
-<img class=\"logo-chico\" src=\"../img/Logo_Prefeco_Quetzalcoatl_4cm.jpg\"><br />
+<img class=\"logo-chico\" src=\"".$domain."Logo_Prefeco_Quetzalcoatl_4cm.jpg\"><br />
 Clave: EMS-2/123 CCT. 17SBC2123R Tepoztlán, Morelos
 </td>
 <td class=\"encabezado-arriba-img\">
-<img class=\"logo\" src=\"../img/DGB_A.png\">
+<img class=\"logo\" src=\"".$domain."DGB_A.png\">
 </td>
 </tr>
 </table>

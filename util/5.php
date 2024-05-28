@@ -20,7 +20,7 @@ echo "
 
 <table  id=\"boletas\">";
 
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
   {
 
 
@@ -212,7 +212,7 @@ $tabindexA  = null;
 $tabindexFA = null;
 $numcampos = $o_database->query_num_rows;
 $rengloncss = 0;
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
   {
     $nombre = $row[1]." ".$row[2]." ".$row[3];
     echo "
