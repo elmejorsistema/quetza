@@ -1,7 +1,7 @@
 <?php
 
 define("EMPRESA", "Prefeco Quetzalcóatl");
-define("ENVIRONMENT", "DEVELOPMENT");
+define("ENVIRONMENT", "PRODUCTION");
 
 // inlcludes
 include "clases.php";
