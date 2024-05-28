@@ -1,0 +1,247 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+html {
+  background-color: #FFFFFF;
+  color: #000000;
+  font-family: arial,helvetica,sans-serif;
+  font-size: 12px;
+  height: 100%;
+  margin: auto;
+  padding: 0;
+  text-align: center;
+}
+
+body {
+  background-color: rgba(0, 0, 0, 0);
+  margin: 130px auto 0;
+}
+
+fieldset {
+  border: 1px solid #E1E1E1;
+  border-radius: 5px;
+  box-shadow: 7px 6px 10px;
+  height: 300px;
+  margin: auto;
+  width: 600px;
+}
+
+table {
+  background-color: rgba(0, 0, 0, 0);
+  border: 0 solid #FFFFFF;
+  border-collapse: collapse;
+  border-radius: 5px;
+  height: 350px;
+  margin: auto;
+  padding: 0;
+  width: 750px;
+}
+
+#myform >  table {
+  box-shadow: 3px 5px 10px;
+}
+
+img
+{
+background-position:center;
+}
+
+td {
+  background-color: rgba(0, 0, 0, 0);
+  border: 0 solid #000000;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+  text-align: left;
+  vertical-align: middle;
+}
+
+td.logo {
+  text-align: center;
+  background-color: #959595;
+  background-position: center center;
+  border: 0 none;
+  border-collapse: collapse;
+  border-radius: 0;
+  border-spacing: 0;
+  color: #000000;
+  padding: 0;
+  width: 180px;
+}
+
+.logo > img {
+  padding: 0 0 10px 10px;
+  vertical-align: bottom;
+}
+
+td.titulo-i {
+  background-color: #959595;
+  border: 0 none;
+  border-collapse: collapse;
+  border-radius: 5px 5px 0 0;
+  border-spacing: 0;
+  color: #000000;
+  font-family: arial,helvetica,sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  height: 50px;
+  margin: 3px;
+  /*padding: 6px 0 0 13px;*/
+  text-align: center;
+  vertical-align: middle;
+}
+
+td.titulo-d {
+  background-color: #959595;
+  border: 0 none;
+  border-collapse: collapse;
+  border-radius: 0 5px 0 0;
+  border-spacing: 0;
+  color: #FFFFFF;
+  font-family: arial,helvetica,sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  margin: 3px;
+  padding: 8px 20px 8px 8px;
+  text-align: right;
+  vertical-align: middle;
+  height: 50px;
+}
+
+td.etiqueta {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background-color: #959595;
+  border-bottom: 0 none;
+  border-collapse: collapse;
+  border-image: none;
+  border-left: 0 none;
+  border-right: 0 none;
+  border-spacing: 0;
+  color: #000000;
+  font-family: arial,helvetica,sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  padding: 8px  8px 8px 13px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+td.etiqueta-borde {
+  background-color: #959595;
+  border: 0 none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-radius:  0 0 0 5px;
+  color: #000000;
+  font-family: arial,helvetica,sans-serif;
+  font-size: 14px;
+  font-weight: bolder;
+  padding: 8px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+td.campo {
+  background-color: #959595;
+  border: 0 none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: #000000;
+  font-family: arial,helvetica,sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 3px;
+  padding: 8px 20px 8px 8px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+td.campo-borde {
+  background-color: #959595;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-radius: 0 0 5px;
+  color: #000000;
+  font-family: arial,helvetica,sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 3px;
+  padding: 8px;
+  text-align: left;
+  vertical-align: middle;
+  border: 0;
+}
+  
+input {
+        background-position: center;
+}
+
+input.campo {
+  background-position: left center;
+  border-radius: 5px;
+  color: #959595;
+  font-family: Geneva,Arial,Helvetica,sans-serif;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: bold;
+  height: 35px;
+  padding: 0 2px;
+  text-align: left;
+  vertical-align: middle;
+  width: 380px;
+}
+
+.campo-borde > button {
+  background-image: linear-gradient(to bottom, #E1E1E1, #FFFFFF, #E1E1E1);
+  border-radius: 3px;
+  color: #000000;
+  font-size: 23px;
+  height: 35px;
+  width: 200px;
+}
+
+.campo-borde > button:hover {
+  color: #01613B;
+}
+
+ /* tooltip styling */
+  .tooltip {
+    display:none;
+    background-color:#FFFFFF;
+	background-image: linear-gradient(to bottom, #959595, #FFFFFF, #959595);
+	border:1px solid #fff;
+    height:20px;
+    padding:8px;
+    width:240px;
+    font-size:15px;
+	text-align:left;
+    color:#000000;
+	margin: 0 0 5px 0;
+	border-radius:5px;
+	 /* outline radius for mozilla/firefox only */
+    -moz-box-shadow:0 0 10px #000;
+    -webkit-box-shadow:0 0 10px #000;
+  }
+  
+
+.error {
+  background-color: #F0EB40;
+  border-radius: 3px;
+  color: #000000;
+  display: none;
+  font-size: 14px;
+  height: 38px;
+  margin: 0 0 0 15px;
+  padding: 0 10px 5px;
+  visibility: visible;
+}
+  
+  .invalid {
+	border: 3px solid red;  
+	display: inline-block;
+  }
+ 

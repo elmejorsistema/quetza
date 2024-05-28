@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Preparatoria Federal por Cooperación Quetzalcóatl</title>
+    <script type="text/javascript" src="jquery/jquery.tools.min.js"></script>
+    <link rel="icon" href="./img/favicon.png" type="image/x-icon">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="./img/favicon.ico">
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/style_login.css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+<table>
+<tr>
+<td>
+<form name="form" action="login.php" method="POST" id="myform">
+    <input type ="hidden" name="control_structure_id" value="1">
+     <table> 
+
+	<tr>
+	  <td class="titulo-i" colspan="2">Preparatoria Federal por Cooperación Quetzalcóatl</td>
+	</tr>   
+
+	<tr>
+          <td class="logo" colspan="2"><img src="./img/logo-ent.jpg" alt="Logo"/></td>
+       </tr>
+
+       <tr>
+	  <td class="etiqueta">Usuario:</td>
+	  <td class="campo"><input autofocus type="text" name="user" size="40" value="" maxlength="64" class="campo" required="required" title="Por favor escribe tu usuario." data-message="Por favor escribe tu usuario." /></td>
+	</tr>   
+
+	<tr>
+	  <td class="etiqueta">Contraseña:</td>
+	  <td class="campo"><input type="password" name="passwd" size="30" maxlength="10" class="campo" required="required" title="Por favor escribe tu contraseña." data-message="Por favor escribe tu contraseña." /></td>
+	</tr>
+
+	<tr>
+	  <td class="etiqueta-borde">&nbsp;</td>
+	  <td class="campo-borde"><button type="submit">Entrar</button></td>
+	</tr>
+
+	<!--<tr>
+	  <td class="etiqueta" >&nbsp;</td>
+	  <td class="etiqueta" >Sistema en mantenimiento</td>
+	</tr>-->
+	  
+
+
+     </table>
+</form>
+<script>
+$("#myform").validator();
+$("#myform :input").tooltip();
+</script>
+<!--
+<script>
+$("#myform").validator({
+ position: 'bottom center',
+ offset: [-2, 10]
+});
+
+$("#myform :input").tooltip({
+ position: 'top center',
+ offset: [-2, 10],
+ effect: 'fade',
+ opacity: 0.7
+});
+</script>
+-->
+</td>
+</tr>
+</table>
+</body>
+</html>
+
