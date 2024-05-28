@@ -36,10 +36,7 @@ $o_databaseCredentials = new databaseCredentials($db_host,  $db_name,  $db_user,
 $o_databaseCredentials2 = new databaseCredentials($db_host2,  $db_name2,  $db_user2,  $db_password2);
 
 // database object
-$o_database  = new database($o_databaseCredentials->db_host,  $o_databaseCredentials->db_name,
-    $o_databaseCredentials->db_user,  $o_databaseCredentials->db_password);
-$o_database2 = new database($o_databaseCredentials2->db_host, $o_databaseCredentials2->db_name,
-    $o_databaseCredentials2->db_user, $o_databaseCredentials2->db_password);
+$o_database  = new database($o_databaseCredentials->db_host,  $o_databaseCredentials->db_name, $o_databaseCredentials->db_user,  $o_databaseCredentials->db_password);
 
 
 
