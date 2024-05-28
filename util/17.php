@@ -114,7 +114,7 @@ if($o_config->todos_los_ciclos) // Todos los ciclos
 echo "<tr><td class=\"encabezado-detalle-pagos\">Folio</td><td class=\"encabezado-detalle-pagos\">Usuario</td><td class=\"encabezado-detalle-pagos\">Ciclo</td><td class=\"encabezado-detalle-pagos\">Semestre</td><td class=\"encabezado-detalle-pagos\">Fecha</td><td class=\"encabezado-detalle-pagos\">Concepto</td><td class=\"encabezado-detalle-pagos\">Monto</td><td class=\"encabezado-detalle-pagos\">Comentario</td><td class=\"encabezado-detalle-pagos\">Recibo</td><td class=\"encabezado-detalle-pagos\">Acciones</td></tr>";
 
 $pagos_sin_recibo = false;
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
 {
 
     $q1 = "select recibo_id from recibo_has_pago where ahc_has_pago_id = $row[0]";
@@ -166,7 +166,7 @@ else // Solamente el ciclo actual
 echo "<tr><td class=\"encabezado-detalle-pagos\">Folio</td><td class=\"encabezado-detalle-pagos\">Usuario</td><td class=\"encabezado-detalle-pagos\">Fecha</td><td class=\"encabezado-detalle-pagos\">Concepto</td><td class=\"encabezado-detalle-pagos\">Monto</td><td class=\"encabezado-detalle-pagos\">Comentario</td><td class=\"encabezado-detalle-pagos\">Recibo</td><td class=\"encabezado-detalle-pagos\">Acciones</td></tr>";
 
 $pagos_sin_recibo = false;
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
 {
 
     $q1 = "select recibo_id from recibo_has_pago where ahc_has_pago_id = $row[0]";

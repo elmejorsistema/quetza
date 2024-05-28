@@ -72,7 +72,7 @@ function menu($o_config, $o_user, $o_database)
   $o_database->query_rows($q);
   $result = $o_database->query_result;
 
-  while($row = mysql_fetch_row($result))
+  foreach($result as $row)
     {
 
       if($row[2])
@@ -115,7 +115,7 @@ function content($o_config, $o_user, $o_database, $o_message)
   $result = $o_database->query_result;
 
   //echo $o_config->control_structure_id1 . "||". $o_config->control_structure_id2;
-  while($row = mysql_fetch_row($result))
+  foreach($result as $row)
     {
    if($row[2])
 	{

@@ -5,7 +5,9 @@ include "functions.php";
 include "../clases.php";
 include "../config/dbconfig.php";
 
-require_once ('../dompdf/dompdf_config.inc.php');
+require_once ('../dompdf/vendor/autoload.php');
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 session_name($session_name);
 session_start();
@@ -17,14 +19,15 @@ session_start();
 
 // the main object arriving
 ////////////////////////////////////////////////
-if(empty($_SESSION['security']) || empty($_SESSION['config']) || empty($_SESSION['user']) || empty($_SESSION['database'])){
-  echo "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=logout.php\" ></head></html>";
+if(empty($_SESSION['security']) || empty($_SESSION['config']) || empty($_SESSION['user']) || empty($_SESSION['databaseCredentials'])){
+  echo "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=../logout.php\" ></head></html>";
   return;
 }else{
  $o_config   = unserialize($_SESSION['config']);
  $o_user     = unserialize($_SESSION['user']);
  $o_security = unserialize($_SESSION['security']);
- $o_database = unserialize($_SESSION['database']);
+ $o_databaseCredentials  = unserialize($_SESSION['databaseCredentials']);
+    
 }
 
 //var_dump($o_config);return;
@@ -32,7 +35,9 @@ if(empty($_SESSION['security']) || empty($_SESSION['config']) || empty($_SESSION
 // VERY IMPORTANT //////////////////////////////
 // connect the database since is not possible
 // serialize/unserialize resources
-$o_database->initialconnect(); 
+$o_database  = new database($o_databaseCredentials->db_host,  $o_databaseCredentials->db_name,
+    $o_databaseCredentials->db_user,  $o_databaseCredentials->db_password);
+
 ///////////////////////////////////////////////
 
 
@@ -277,7 +282,7 @@ $alumno_id = null;
 $inicio    = true;
 $contador  = 1;
 $c = 0 ;
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
   {
    
 
@@ -305,7 +310,7 @@ while($row = mysql_fetch_row($result))
 <td class=\"encabezado-arriba-centro\" colspan=\"9\">
 
 <div class=\"la\">
-<img class=\"firma\" src=\"../img/firma.png\">
+<img class=\"firma\" src=\"".$o_config->domain."firma.png\">
 </div>
 
 </td>
@@ -326,7 +331,7 @@ while($row = mysql_fetch_row($result))
 	  }
 	$alumno_id = $row[13];
   $html .= "<div class=\"page_break\"></div>";
-	$html .= encabezado($row[12], $row[14], $fecha_boletas, $o_config->ciclo, $o_config->tipo);
+	$html .= encabezado($row[12], $row[14], $fecha_boletas, $o_config->ciclo, $o_config->tipo, $o_config->domain);
 	$html .= "
 
 <table>
@@ -419,7 +424,7 @@ $html .= "
 <td class=\"encabezado-arriba-centro\" colspan=\"9\">
 
 <div class=\"la\">
-<img class=\"firma\" src=\"../img/firma.png\">
+<img class=\"firma\" src=\"".$o_config->domain."firma.png\">
 </div>
 
 </td>
@@ -432,16 +437,20 @@ $html .= "
 
 </table></body></html>";
 
+$options = new Options();
+$options->set('isHtml5ParserEnabled', true);
+//$options->set('debugKeepTemp', true); // Keep temporary files for debugging
+$options->set('isRemoteEnabled', true);
+$options->set("enable_html5_parser", true);
+$pdf = new Dompdf($options);
 
-$pdf = new DOMPDF();
+//$pdf->set_option("enable_html5_parser", TRUE);
 
-$pdf->set_option("enable_html5_parser", TRUE);
-
-$pdf->set_paper("Letter", "portrait");
+$pdf->setPaper("Letter", "portrait");
 
 //echo $html; return;
 
-$pdf->load_html($html);
+$pdf->loadHtml($html);
 
 $pdf->render();
  
@@ -450,13 +459,13 @@ if($final)
 else
   $nombre_archivo = $grupo.".pdf";
 
-
+//echo $html;return;
 $pdf->stream($nombre_archivo);
 
 //echo $html;
 
 
-function encabezado($semestre, $nombre_grupo, $fecha, $ciclo, $tipo)
+function encabezado($semestre, $nombre_grupo, $fecha, $ciclo, $tipo, $domain)
 {
  
 return "
@@ -464,18 +473,18 @@ return "
 <table>
 <tr>
 <td class=\"encabezado-arriba-img\">
-<img class=\"logo\" src=\"../img/SEP_3cm_ch.jpg\">
+<img class=\"logo\" src=\"".$domain."SEP_3cm_ch.jpg\">
 </td>
 <td class=\"encabezado-arriba-centro\">
 Subsecretaría de Educación Media Superior<br />
 Dirección General de Bachillerato<br />
 Escuela Preparatoria Federal por Cooperación<br />
 <b>\"QUETZALCÓATL\"</b><br />
-<img class=\"logo-chico\" src=\"../img/Logo_Prefeco_Quetzalcoatl_4cm.jpg\"><br />
+<img class=\"logo-chico\" src=\"".$domain."Logo_Prefeco_Quetzalcoatl_4cm.jpg\"><br />
 Clave: EMS-2/123 CCT. 17SBC2123R Tepoztlán, Morelos
 </td>
 <td class=\"encabezado-arriba-img\">
-<img class=\"logo\" src=\"../img/DGB_A.png\">
+<img class=\"logo\" src=\"".$domain."DGB_A.png\">
 </td>
 </tr>
 </table>

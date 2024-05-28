@@ -41,10 +41,15 @@ class config{
   // El folio actual  
   public $folio;
 
+  // Environment
+    public $environment;
+
+    // Domain
+    public $domain;
 
     
 
-  function __construct($control_structure_id1, $control_structure_id2, $company_name, $ciclo, $tipo)
+  function __construct($control_structure_id1, $control_structure_id2, $company_name, $ciclo, $tipo, $environment)
   {   
     $this->control_structure_id1 = $control_structure_id1;
     $this->control_structure_id2 = $control_structure_id2;
@@ -54,6 +59,12 @@ class config{
     $this->alumno_id             = null;
     $this->todos_los_ciclos      = false;
     $this->folio                 = null;
+    $this->environment           = $environment;
+    if($environment == 'DEVELOPMENT') {
+        $this->domain = "http://localhost/~manuel/quetza/img/";
+    }else{
+        $this->domain = "https://intranet.quetza.edu.mx/img/";
+    }
 
     return;   
   }// end constructor

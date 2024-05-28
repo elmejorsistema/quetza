@@ -11,21 +11,24 @@ session_start();
 
 // the main object arriving
 ////////////////////////////////////////////////
-if(empty($_SESSION['security']) || empty($_SESSION['config']) || empty($_SESSION['user']) || empty($_SESSION['database'])){
-  echo "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=logout.php\" ></head></html>";
+if(empty($_SESSION['security']) || empty($_SESSION['config']) || empty($_SESSION['user']) || empty($_SESSION['databaseCredentials'])){
+  echo "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=../logout.php\" ></head></html>";
   return;
 }else{
  $o_config   = unserialize($_SESSION['config']);
  $o_user     = unserialize($_SESSION['user']);
  $o_security = unserialize($_SESSION['security']);
- $o_database = unserialize($_SESSION['database']);
+ $o_databaseCredentials  = unserialize($_SESSION['databaseCredentials']);
+    
 }
 
 
 // VERY IMPORTANT //////////////////////////////
 // connect the database since is not possible
 // serialize/unserialize resources
-$o_database->initialconnect(); 
+$o_database  = new database($o_databaseCredentials->db_host,  $o_databaseCredentials->db_name,
+    $o_databaseCredentials->db_user,  $o_databaseCredentials->db_password);
+
 ///////////////////////////////////////////////
 
 
@@ -82,7 +85,7 @@ $salida .= "Reporte de Gastos Fijos del $initial al $final,,,,\r\n";
 
 $salida .= "Concepto,Fecha,Total sin Impuestos,Impuesto,Total\r\n";
 
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
   {
     $salida .= "\"$row[0]\",\"$row[1]\",$row[2],$row[3],$row[4]\r\n";
     $total0 += $row[4];

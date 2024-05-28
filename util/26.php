@@ -93,7 +93,7 @@ echo "<hr /><table class=\"nuevo-pagos\">
 $q = "select p.descripcion, chp.fecha_limite from ciclo_has_pago as chp join pago as p on chp.pago_id = p.id where chp.ciclo_id = '$o_config->ciclo' and chp.ciclo_tipo = '$o_config->tipo' order by chp.fecha_limite, chp.id";
 $o_database->query_rows($q);
 $result = $o_database->query_result;
-while($row = mysql_fetch_row($result))
+foreach($result as $row)
     echo "<td class=\"nuevo-pagos-c\">$row[0]<br />[ $row[1] ]<td>";
 echo "</tr></table><hr />";
 
