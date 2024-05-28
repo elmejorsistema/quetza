@@ -492,7 +492,8 @@ function imprime_nuevo_recibo($user_id, $a_recibo, $o_database)
 
     $q = "insert into recibo values ( null, $user_id, now() )";
     $o_database->query_assign($q);
-    $insert_id = mysql_insert_id(); 
+    $insert_id = $o_database->link_id->lastInsertId();
+
     //return;
 
     $q = "insert into recibo_has_pago values ";
